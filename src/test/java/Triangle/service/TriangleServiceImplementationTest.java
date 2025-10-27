@@ -17,7 +17,7 @@ class TriangleServiceImplementationTest {
 
 
             NOTE: Settings > Build,Execution,Deployment > Build Tools > Gradle > Runner > "Run tests using:" INTELIJ IDEA
-
+            href: https://velog.io/@yeseul/No-matching-tests-found-in-any-candidate-test-task.-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0
 
 
 
