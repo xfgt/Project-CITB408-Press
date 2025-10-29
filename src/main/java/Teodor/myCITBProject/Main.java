@@ -18,19 +18,20 @@
  */
 
 
+package Teodor.myCITBProject;
 
-
-package Teodor.myProject;
+import Teodor.myCITBProject.data.PrintingHouse.Editions.Newspaper;
+import Teodor.myCITBProject.data.PrintingHouse.Enums.PaperSize;
 
 public class Main {
-
     public static void main(String[] args){
         System.out.println("=======================================");
         System.out.println("PROJECT FROM COURSE CITB408 - \"PRESS\"");
         System.out.println("=======================================\n\n\n\n\n\n");
+        System.out.println("Teodor.myCITBProject.Main");
 
-
-
+        Newspaper newspaper = new Newspaper("Telegraf", 12, PaperSize.A3);
+        System.out.println(newspaper.getPrice());
 
     }
 }
