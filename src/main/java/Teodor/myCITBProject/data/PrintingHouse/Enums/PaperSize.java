@@ -4,11 +4,11 @@ public enum PaperSize {
 
 
 
-    A5(1.0),
-    A4(1.5),
-    A3(2.0),
+    A1(3.0),
     A2(2.5),
-    A1(3.0);
+    A3(2.0),
+    A4(1.5),
+    A5(1.0);
 
     private double priceMultiplier;
 

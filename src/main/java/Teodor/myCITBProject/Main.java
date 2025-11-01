@@ -22,6 +22,7 @@ package Teodor.myCITBProject;
 
 import Teodor.myCITBProject.data.PrintingHouse.Editions.Newspaper;
 import Teodor.myCITBProject.data.PrintingHouse.Enums.PaperSize;
+import Teodor.myCITBProject.data.PrintingHouse.Enums.PaperType;
 
 public class Main {
     public static void main(String[] args){
@@ -31,7 +32,11 @@ public class Main {
         System.out.println("Teodor.myCITBProject.Main");
 
         Newspaper newspaper = new Newspaper("Telegraf", 12, PaperSize.A3);
-        System.out.println(newspaper.getPrice());
+        newspaper.setPaperType(PaperType.NEWSPAPER);
+
+
+        System.out.println(newspaper.getPaperPrice());
+        System.out.println(newspaper.getPaperType().getBasePrice());
 
     }
 }
