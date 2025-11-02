@@ -20,9 +20,8 @@
 
 package Teodor.myCITBProject;
 
-import Teodor.myCITBProject.data.PrintingHouse.Editions.Newspaper;
-import Teodor.myCITBProject.data.PrintingHouse.Enums.PaperSize;
-import Teodor.myCITBProject.data.PrintingHouse.Enums.PaperType;
+import Teodor.myCITBProject.data.PrintingHouse.Editions.*;
+import Teodor.myCITBProject.data.PrintingHouse.Enums.*;
 
 public class Main {
     public static void main(String[] args){
@@ -33,10 +32,13 @@ public class Main {
 
         Newspaper newspaper = new Newspaper("Telegraf", 12, PaperSize.A3);
         newspaper.setPaperType(PaperType.NEWSPAPER);
-
-
         System.out.println(newspaper.getPaperPrice());
         System.out.println(newspaper.getPaperType().getBasePrice());
 
+        Book book = new Book("Pod igoto", 500, PaperSize.A5);
+        book.setPaperType(PaperType.STANDARD);
+        System.out.println(book.getPaperPrice());
+
+        //TODO Add colorings
     }
 }

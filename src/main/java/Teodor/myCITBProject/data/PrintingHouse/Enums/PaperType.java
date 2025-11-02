@@ -16,8 +16,8 @@ public enum PaperType {
 
     private final double basePrice;
 
-    PaperType(double x) {
-        this.basePrice = x;
+    PaperType(double amount) {
+        this.basePrice = amount;
     }
 
     public final double getBasePrice(){ return this.basePrice; }
