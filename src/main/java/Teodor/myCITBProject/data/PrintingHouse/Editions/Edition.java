@@ -12,15 +12,15 @@ public abstract class Edition implements IPaperPricing {
     private String title;
     private int pages;
     private PaperSize paperSize;
+    private PaperType paperType;
+    private boolean color;
 
-
-
-    public Edition(String title, int pages, PaperSize paperSize) {
+    public Edition(String title, int pages, PaperSize paperSize, PaperType paperType, boolean color) {
         this.title = title;
         this.pages = pages;
         this.paperSize = paperSize;
-
-
+        this.paperType = paperType;
+        this.color = color;
     }
 
     public String getTitle() {
@@ -35,8 +35,13 @@ public abstract class Edition implements IPaperPricing {
         return paperSize;
     }
 
+    public PaperType getPaperType() {
+        return paperType;
+    }
 
-
+    public boolean isColor() {
+        return color;
+    }
 
     @Override
     public String toString() {
@@ -44,6 +49,9 @@ public abstract class Edition implements IPaperPricing {
                 "title='" + title + '\'' +
                 ", pages=" + pages +
                 ", paperSize=" + paperSize +
+                ", paperType=" + paperType +
+                ", color=" + color +
                 '}';
     }
+
 }

@@ -5,28 +5,18 @@ import Teodor.myCITBProject.data.PrintingHouse.Enums.PaperType;
 
 public class Newspaper extends Edition{
 
-    PaperType paperType;
-    public Newspaper(String title, int pages, PaperSize paperSize) {
-        super(title, pages, paperSize);
-    }
-
-    public PaperType getPaperType() {
-        return paperType;
-    }
-
-    public void setPaperType(PaperType paperType) {
-        this.paperType = paperType;
-    }
-
-    @Override
-    public String toString() {
-        return "Newspaper{" +
-                "paperType=" + paperType +
-                "} " + super.toString();
+    public Newspaper(String title, int pages, PaperSize paperSize, PaperType paperType, boolean color) {
+        super(title, pages, paperSize, paperType, color);
     }
 
     @Override
     public double getPaperPrice() {
-        return paperType.getBasePrice() * super.getPaperSize().getPriceMultiplier();
+        return this.getPaperType().getBasePrice() * this.getPaperSize().getPriceMultiplier();
+    }
+
+    @Override
+    public String toString() {
+        return "Newspaper{" + super.toString() +
+                '}';
     }
 }

@@ -14,13 +14,14 @@ public enum PaperType {
     GLOSSY(1.58);
 
 
-    private final double basePrice;
+    private  double basePrice;
 
     PaperType(double amount) {
         this.basePrice = amount;
     }
 
-    public final double getBasePrice(){ return this.basePrice; }
+    public  double getBasePrice(){ return this.basePrice; }
 
+    public void setBasePrice(double amount){ this.basePrice = amount; }
 
 }
