@@ -7,17 +7,17 @@ public class Manager extends Employee{
         определена стойност, която се задава в печатницата.
      */
     private double percentBonus;
-    private double expectedProfit; // определената стойност
+    private double profit; // определената стойност
 
-    public Manager(double baseSalary, double percentBonus, double expectedProfit) {
+    public Manager(double baseSalary, double percentBonus, double profit) {
         super(baseSalary);
         this.percentBonus = percentBonus;
-        this.expectedProfit = expectedProfit;
+        this.profit = profit;
     }
 
     @Override
-    public double calculateSalary(double printingHouseProfits) {
-        if(printingHouseProfits > expectedProfit)
+    public double calculateSalary(double printingHouseProfits) { // external -> PressBuilding profit
+        if(profit > printingHouseProfits)
             return getBaseSalary() + (getBaseSalary() * percentBonus / 100);
         return getBaseSalary();
     }
@@ -26,7 +26,7 @@ public class Manager extends Employee{
     public String toString() {
         return "Manager{" +
                 "percentBonus=" + percentBonus +
-                ", profitCeiling=" + expectedProfit +
+                ", profitCeiling=" + profit +
                 "} " + super.toString();
     }
 }
