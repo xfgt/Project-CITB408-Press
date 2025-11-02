@@ -10,11 +10,6 @@ public class Newspaper extends Edition{
     }
 
     @Override
-    public double getPaperPrice() {
-        return this.getPaperType().getBasePrice() * this.getPaperSize().getPriceMultiplier();
-    }
-
-    @Override
     public String toString() {
         return "Newspaper{" + super.toString() +
                 '}';
