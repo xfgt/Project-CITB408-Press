@@ -142,22 +142,5 @@ class PressMachineTests {
         });
     }
 
-    // @Test
-    void printEdition() {
-        PressMachine pm = new PressMachine(5000, true);
 
-            pm.loadPaper(4000); //TODO fix to custom exceptions
-            assertThrows(Exception.class, () -> {
-                pm.printEdition(newspaper_A2_NEWSPAPER_noColored, 3);
-            }); // 12*3 pages
-
-
-
-
-            assertThrows(Exception.class, ()->{
-                pm.printEdition(book_A5_STANDARD_noColored, 6); // 500*6 pages
-            });
-
-
-    }
 }
