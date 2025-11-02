@@ -13,15 +13,12 @@ public enum PaperType {
     STANDARD(0.36),
     GLOSSY(1.58);
 
-
-    private  double basePrice;
+    private double basePrice;
 
     PaperType(double amount) {
         this.basePrice = amount;
     }
-
     public  double getBasePrice(){ return this.basePrice; }
-
     public void setBasePrice(double amount){ this.basePrice = amount; }
 
 }

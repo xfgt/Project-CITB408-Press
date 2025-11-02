@@ -10,7 +10,6 @@ public abstract class Employee implements ISalaries, Serializable {
     public Employee(double baseSalary) {
         this.baseSalary = baseSalary;
     }
-
     public double getBaseSalary() {
         return baseSalary;
     }

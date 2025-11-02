@@ -14,19 +14,15 @@ public enum PaperSize {
 
     PaperSize(double m) { priceMultiplier = m; }
 
-
-    // GET
     public double getPriceMultiplier() { return priceMultiplier; }
-
+    public void setPriceMultiplier(double _pm) {
+        this.priceMultiplier = _pm;
+    }
     /*
-    SET
         За всеки следващ размер, цената на хартията трябва да се увеличава с
         определен процент. Освен това цените на хартията не трябва да бъдат едни и същи за всички
         печатници в приложението.
      */
-    public void setPriceMultiplier(double _pm) {
-        this.priceMultiplier = _pm;
-    }
 
 }
 
