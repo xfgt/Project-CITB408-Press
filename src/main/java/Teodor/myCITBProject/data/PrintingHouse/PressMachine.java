@@ -1,6 +1,10 @@
 package Teodor.myCITBProject.data.PrintingHouse;
 
 import Teodor.myCITBProject.data.PrintingHouse.Editions.Edition;
+import Teodor.myCITBProject.data.PrintingHouse.Exception.IncompatibleEditionException;
+import Teodor.myCITBProject.data.PrintingHouse.Exception.MachineOverloadException;
+import Teodor.myCITBProject.data.PrintingHouse.Exception.MachineException;
+import Teodor.myCITBProject.data.PrintingHouse.Exception.PrintingException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +15,6 @@ public class PressMachine {
     private int accumulatedSheets; // колко страници е отпечатала машината
 
     private boolean printsInColor;
-
-
     private Map<Edition, Integer> printedEditions = new HashMap<>();
 
 
@@ -20,37 +22,39 @@ public class PressMachine {
         this.machineSheetsCapacity = machineSheetsCapacity;
         this.printsInColor = color;
     }
-
-    public void loadPaper(int amountOfSheets) throws IllegalArgumentException{
+    public void loadPaper(int amountOfSheets) throws MachineException {
         if(loadedSheetsAmount + amountOfSheets > machineSheetsCapacity) // must not exceed machineSheetsCapacity!
-            throw new IllegalArgumentException("Machine overloaded with sheets (above capacity)");
-
+            throw new MachineOverloadException("Machine overloaded with sheets (above capacity)");
         loadedSheetsAmount += amountOfSheets;
     }
 
     // При печат на всяко издание, трябва да се определя дали ще се използва цветен или черно-бял печат.
-    public void printEdition(Edition edition, int copies) throws Exception {
+    public void printEdition(Edition edition, int copies) throws PrintingException, IllegalArgumentException  {
 
         // Ако печатната машина не е от подходящия тип, трябва да се хвърля изключение.
-        if (edition.isColor() || printsInColor)
-            throw new Exception("Machine does not print with that type of edition: " + edition.getPaperType());
+        if (edition.isColor() != this.printsInColor)
+            throw new IncompatibleEditionException("Machine does not print with that type of edition: " + edition.getPaperType());
 
 
+        if(loadedSheetsAmount <= 0)
+            throw new PrintingException("No paper.");
+
+
+        if(copies <= 0)
+            throw new IllegalArgumentException("Cannot print 0 or negative copies for an existing Edition!");
         int totalPages = edition.getPages() * copies;
         if (totalPages > loadedSheetsAmount)
-            throw new Exception("Not enough paper");
+            throw new PrintingException("Not enough paper");
 
         accumulatedSheets += totalPages;
         loadedSheetsAmount -= totalPages;
 
         printedEditions.put(edition, printedEditions.getOrDefault(edition, 0) + copies);
-
     }
 
     public int getAccumulatedSheetsOfPaper(){ // Необходимо е да се реализира метод, който да връща колко страници са отпечатани на машината.
         return accumulatedSheets;
     }
-
     public Map<Edition, Integer> getPrintedEditions(){
         return printedEditions;
     }
