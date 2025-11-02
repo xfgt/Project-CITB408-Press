@@ -37,5 +37,5 @@ class ManagerTest {
     }
 
     // TODO: add tests for negative values of
-    //  Manager::percentBonus and Manager::profitCeiling;
+    //  Manager::percentBonus and Manager::expectedProfit;
 }

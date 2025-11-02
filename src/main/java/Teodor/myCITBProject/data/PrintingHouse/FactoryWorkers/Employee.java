@@ -2,7 +2,9 @@ package Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers;
 
 import Teodor.myCITBProject.service.PrintingHouse.FactoryWorkers.ISalaries;
 
-public abstract class Employee implements ISalaries {
+import java.io.Serializable; // Да се сериализират и десериализират данните за служител в печатницата.
+
+public abstract class Employee implements ISalaries, Serializable {
     private double baseSalary;
 
     public Employee(double baseSalary) {
