@@ -31,6 +31,7 @@ class PressMachineTests {
     @BeforeEach
     void setup(){
 
+        pm = new PressMachine(100, false);
 
         newspaper_A2_NEWSPAPER_noColored = new Newspaper("Telegraf", 36, PaperSize.A2, PaperType.NEWSPAPER, false);
         newspaper_A3_GLOSSY_colored = new Newspaper("Kapital", 24, PaperSize.A3, PaperType.GLOSSY, true);
@@ -49,7 +50,6 @@ class PressMachineTests {
 
     @Test
     void loadPaper_sheetsEqualsCapacity_doesNotThrow(){
-        pm = new PressMachine(100, false);
         assertDoesNotThrow(() -> {
             pm.loadPaper(100);
         });
@@ -57,7 +57,6 @@ class PressMachineTests {
     }
     @Test
     void loadPaper_sheetsAboveCapacity_ThrowMachineOverloadException(){
-        pm = new PressMachine(100, false);
         assertThrows(MachineOverloadException.class, () -> {pm.loadPaper(101);});
     }
 
@@ -68,7 +67,6 @@ class PressMachineTests {
 
     @Test
     void printEdition_printWithoutLoadedPaper_throwPrintingException(){
-        pm = new PressMachine(100, false);
         Edition book = new Book("", 100, PaperSize.A4, PaperType.STANDARD, false);
         assertThrows(PrintingException.class, () -> {
             pm.printEdition(book, 1);
@@ -77,7 +75,6 @@ class PressMachineTests {
 
     @Test
     void printEdition_badArgumentForCopies_throwIllegalArgumentException(){
-        pm = new PressMachine(100, false);
         pm.loadPaper(100);
         Edition book = new Book("", 100, PaperSize.A4, PaperType.STANDARD, false);
         assertThrows(IllegalArgumentException.class, () -> {
@@ -87,7 +84,6 @@ class PressMachineTests {
 
     @Test
     void printEdition_machineHasNotEnoughPaper_thenThrowPrintingException() {
-        pm = new PressMachine(100, false);
         pm.loadPaper(100);
         Edition book = new Book("", 101, PaperSize.A4, PaperType.STANDARD, false);
 
@@ -98,7 +94,6 @@ class PressMachineTests {
     }
     @Test
     void loadPaper_loadedSheetsAboveCapacityWhenSomeAmountAlreadyLoaded_ThrowMachineOverloadException(){
-        pm = new PressMachine(100, false);
         pm.loadPaper(50);
         assertThrows(MachineOverloadException.class, () -> {pm.loadPaper(51);});
     }
@@ -107,7 +102,7 @@ class PressMachineTests {
 
     @Test
     void printEdition_machineWithColorPrintAndEditionNoColorMismatch_thenThrowIncompatibleEditionException() {
-        pm = new PressMachine(100, true);
+        pm = new PressMachine(100, true); // TRUE!
         pm.loadPaper(100);
         Edition book = new Book("", 100, PaperSize.A4, PaperType.STANDARD, false);
         assertThrows(IncompatibleEditionException.class, () -> {
@@ -117,7 +112,6 @@ class PressMachineTests {
 
     @Test
     void printEdition_machineNoColorPrintAndEditionWithColorMissmatch_thenThrowIncompatibleEditionException() {
-        pm = new PressMachine(100, false);
         pm.loadPaper(100);
         Edition book = new Book("", 100, PaperSize.A4, PaperType.STANDARD, true);
 
