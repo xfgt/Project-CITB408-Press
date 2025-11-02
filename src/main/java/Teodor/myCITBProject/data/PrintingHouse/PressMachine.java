@@ -18,13 +18,38 @@ public class PressMachine {
     private Map<Edition, Integer> printedEditions = new HashMap<>();
 
 
-    public PressMachine(int machineSheetsCapacity, boolean color) {
+    public PressMachine(int machineSheetsCapacity, boolean color) throws IllegalArgumentException {
+        if(machineSheetsCapacity <= 0)
+            throw new IllegalArgumentException("Capacity must be above zero!");
+
         this.machineSheetsCapacity = machineSheetsCapacity;
         this.printsInColor = color;
     }
-    public void loadPaper(int amountOfSheets) throws MachineException {
+
+    public int getMachineSheetsCapacity() {
+        return machineSheetsCapacity;
+    }
+
+    public int getLoadedSheetsAmount() {
+        return loadedSheetsAmount;
+    }
+    public int getAccumulatedSheetsOfPaper(){ // Необходимо е да се реализира метод, който да връща колко страници са отпечатани на машината.
+        return accumulatedSheets;
+    }
+    public Map<Edition, Integer> getPrintedEditions(){
+        return printedEditions;
+    }
+
+
+
+    public void loadPaper(int amountOfSheets) throws MachineException, IllegalArgumentException {
+
+        if(amountOfSheets <= 0)
+            throw new IllegalArgumentException("Argument must be positive value!");
+
         if(loadedSheetsAmount + amountOfSheets > machineSheetsCapacity) // must not exceed machineSheetsCapacity!
             throw new MachineOverloadException("Machine overloaded with sheets (above capacity)");
+
         loadedSheetsAmount += amountOfSheets;
     }
 
@@ -41,7 +66,9 @@ public class PressMachine {
 
 
         if(copies <= 0)
-            throw new IllegalArgumentException("Cannot print 0 or negative copies for an existing Edition!");
+            throw new IllegalArgumentException("Cannot print zero or negative copies for an existing Edition!");
+
+
         int totalPages = edition.getPages() * copies;
         if (totalPages > loadedSheetsAmount)
             throw new PrintingException("Not enough paper");
@@ -52,10 +79,5 @@ public class PressMachine {
         printedEditions.put(edition, printedEditions.getOrDefault(edition, 0) + copies);
     }
 
-    public int getAccumulatedSheetsOfPaper(){ // Необходимо е да се реализира метод, който да връща колко страници са отпечатани на машината.
-        return accumulatedSheets;
-    }
-    public Map<Edition, Integer> getPrintedEditions(){
-        return printedEditions;
-    }
+
 }

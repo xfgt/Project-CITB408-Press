@@ -46,7 +46,30 @@ class PressMachineTests {
 
 
 
+    // Constructor
+    @Test
+    void constructor_machineSheetsCapacityIsZeroOrNegative_throwIllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class, () ->{
+           pm = new PressMachine(0, false);
+        });
+        assertThrows(IllegalArgumentException.class, () ->{
+            pm = new PressMachine(-1, false);
+        });
+    }
 
+
+    // loadPaper
+
+    @Test
+    void loadPaper_negativeOrZeroSheetsValue_throwIllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class, () -> {
+            pm.loadPaper(-1);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            pm.loadPaper(0);
+        });
+    }
 
     @Test
     void loadPaper_sheetsEqualsCapacity_doesNotThrow(){
@@ -97,7 +120,6 @@ class PressMachineTests {
         pm.loadPaper(50);
         assertThrows(MachineOverloadException.class, () -> {pm.loadPaper(51);});
     }
-
 
 
     @Test
