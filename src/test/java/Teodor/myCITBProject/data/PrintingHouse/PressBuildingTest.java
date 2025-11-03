@@ -11,10 +11,13 @@ import Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers.Manager;
 import Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers.Operator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Nested;
+
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PressBuildingTest {
 
@@ -142,55 +145,89 @@ class PressBuildingTest {
 
 
 
+    @Nested
+    class PressBuildingProfits{
 
-    @Test
-    void getEmployeeExpenses_whereManagerPersonalProfitFromSalesIsBelowTarget_returnSumOfBaseSalaries() {
 
-        assertEquals(1900, localPB.getEmployeeExpenses()); // 1000 + 900 = 1900
-        assertEquals(2500, localPB2.getEmployeeExpenses()); // 1600 + 900 = 2500
+        @Test
+        void getPaperProfits_EditionsForCustomersWithVAT(){
+
+
+            double ea = 79.80 + (79.80*20/100);
+            double eb = 1191.0 + (1191.0*20/100);
+
+            assertEquals(Math.round(ea * 100.0) / 100.0, localPB.getPaperProfits());
+            assertEquals(Math.round(eb * 100.0) / 100.0, localPB2.getPaperProfits());
+
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+    @Nested
+    class PressBuildingExpenses{
+
+        @Nested
+        class EmployeeExpenses{
+            @Test
+            void getEmployeeExpenses_whereManagerPersonalProfitFromSalesIsBelowTarget_returnSumOfBaseSalaries() {
+
+                assertEquals(1900, localPB.getEmployeeExpenses()); // 1000 + 900 = 1900
+                assertEquals(2500, localPB2.getEmployeeExpenses()); // 1600 + 900 = 2500
+
+
+
+            }
+
+            @Test
+            void getEmployeeExpenses_whereManagerPersonalProfitFromSalesAboveTarget_returnSumOfBaseSalariesWithManagerPersonalBonusPercent() {
+
+                //localPB_goalForProfits = 1000
+                //localPB2_goalForProfits = 1000
+
+                manager = new Manager(1000, 5, 1500); // 1000 + (1000*5/100) = 1050 + operator(900) = 1950
+                manager2 = new Manager(1600, 5, 1500); // 1600 + (1600 * 5 /100) = 1680 + operator(900) = 2580
+
+                ArrayList<Employee> new_employees = new ArrayList<>();
+                new_employees.add(manager);
+                new_employees.add(operator);
+
+                ArrayList<Employee> new_employees2 = new ArrayList<>();
+                new_employees2.add(manager2);
+                new_employees2.add(operator2);
+
+
+
+                localPB = new PressBuilding("", new_employees, local_machines, 1000);
+                assertEquals(1950, localPB.getEmployeeExpenses());
+
+
+                localPB2 = new PressBuilding("", new_employees2, local_machines2, 1000);
+                assertEquals(2580, localPB2.getEmployeeExpenses());
+            }
+
+        }
+
+
+        @Nested
+        class PaperExpenses{
+            @Test
+            void getPaperExpenses() {
+                assertEquals(79.80, localPB.getPaperExpenses());
+                assertEquals(1191, localPB2.getPaperExpenses());
+            }
+        }
 
 
 
     }
 
-    @Test
-    void getEmployeeExpenses_whereManagerPersonalProfitFromSalesAboveTarget_returnSumOfBaseSalariesWithManagerPersonalBonusPercent() {
 
-        //localPB_goalForProfits = 1000
-        //localPB2_goalForProfits = 1000
-
-        manager = new Manager(1000, 5, 1500); // 1000 + (1000*5/100) = 1050 + operator(900) = 1950
-        manager2 = new Manager(1600, 5, 1500); // 1600 + (1600 * 5 /100) = 1680 + operator(900) = 2580
-
-        ArrayList<Employee> new_employees = new ArrayList<>();
-        new_employees.add(manager);
-        new_employees.add(operator);
-
-        ArrayList<Employee> new_employees2 = new ArrayList<>();
-        new_employees2.add(manager2);
-        new_employees2.add(operator2);
-
-
-
-        localPB = new PressBuilding("", new_employees, local_machines, 1000);
-        assertEquals(1950, localPB.getEmployeeExpenses());
-
-
-        localPB2 = new PressBuilding("", new_employees2, local_machines2, 1000);
-        assertEquals(2580, localPB2.getEmployeeExpenses());
-
-
-
-    }
-
-    @Test
-    void getPaperExpences() {
-
-
-        assertEquals(79.80, localPB.getPaperExpences());
-        assertEquals(1191, localPB2.getPaperExpences());
-
-
-
-    }
 }

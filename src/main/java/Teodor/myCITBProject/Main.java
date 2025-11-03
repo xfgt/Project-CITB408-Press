@@ -41,7 +41,7 @@ public class Main {
 
 
         try{
-            throw new IllegalArgumentException("asdf");
+
         }catch (Exception e){
 
             System.out.println("Found exception: " + e.getLocalizedMessage());
