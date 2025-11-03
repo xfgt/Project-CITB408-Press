@@ -56,9 +56,8 @@ public abstract class Edition implements IPaperPricing {
 
     @Override
     public double getPaperPrice() {
-        return this.getPaperType().getBasePrice()
-                + (this.getPaperType().getBasePrice() * this.getPaperSize().getPriceMultiplier()) ;
-        // За всеки следващ размер, цената на хартията трябва да се увеличава с определен процент.
+        return (this.getPaperType().getBasePrice() * this.getPaperSize().getPriceMultiplier()) ;
+
     }
 
 }
