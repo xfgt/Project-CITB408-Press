@@ -1,6 +1,8 @@
 package Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers;
 
-public class Manager extends Employee{
+import java.io.Serializable;
+
+public class Manager extends Employee implements Serializable {
 
     private final double personalBonusPercent;
     private double profitFromSales; // определената стойност

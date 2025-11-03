@@ -1,0 +1,2 @@
+Book{Edition{title='Pod igoto', pages=500, paperSize=A5, paperType=STANDARD, color=true}}
+Newspaper{Edition{title='Telegraf', pages=12, paperSize=A3, paperType=NEWSPAPER, color=false}}

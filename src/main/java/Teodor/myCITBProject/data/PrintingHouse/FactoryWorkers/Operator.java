@@ -1,6 +1,8 @@
 package Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers;
 
-public class Operator extends Employee{
+import java.io.Serializable;
+
+public class Operator extends Employee implements Serializable {
     public Operator(double baseSalary) {
         super(baseSalary);
     }
