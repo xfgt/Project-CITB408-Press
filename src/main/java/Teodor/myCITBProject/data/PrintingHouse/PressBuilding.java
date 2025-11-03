@@ -27,12 +27,12 @@ public class PressBuilding {
         return Math.round(x * 100.0) / 100.0;
     }
 
-    PressBuilding(
+    public PressBuilding(
             String name,
             ArrayList<Employee> employees,
             ArrayList<PressMachine> machines,
             double goalForProfits
-            ){
+    ){
         this.name = name;
         this.employees = employees;
         this.machines = machines;
