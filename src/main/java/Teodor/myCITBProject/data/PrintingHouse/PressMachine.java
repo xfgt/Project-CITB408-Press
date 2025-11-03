@@ -12,7 +12,7 @@ import java.util.Map;
 public class PressMachine {
     private int machineSheetsCapacity;
     private int loadedSheetsAmount;
-    private int accumulatedSheets; // колко страници е отпечатала машината
+    private int accumulatedSheets; // колко хартия е минала през машината
 
     private boolean printsInColor;
     private Map<Edition, Integer> printedEditions = new HashMap<>();
@@ -30,7 +30,7 @@ public class PressMachine {
         return machineSheetsCapacity;
     }
 
-    public int getLoadedSheetsAmount() {
+    public int getAvailablePaper() {
         return loadedSheetsAmount;
     }
     public int getAccumulatedSheetsOfPaper(){ // Необходимо е да се реализира метод, който да връща колко страници са отпечатани на машината.
@@ -61,7 +61,7 @@ public class PressMachine {
             throw new IncompatibleEditionException("Machine does not print with that type of edition: " + edition.getPaperType());
 
 
-        if(loadedSheetsAmount <= 0)
+        if(getAvailablePaper() <= 0)
             throw new PrintingException("No paper.");
 
 
@@ -74,7 +74,7 @@ public class PressMachine {
             throw new PrintingException("Not enough paper");
 
         accumulatedSheets += totalPages;
-        loadedSheetsAmount -= totalPages;
+        loadedSheetsAmount -= totalPages; // 1 copy
 
         printedEditions.put(edition, printedEditions.getOrDefault(edition, 0) + copies);
     }
