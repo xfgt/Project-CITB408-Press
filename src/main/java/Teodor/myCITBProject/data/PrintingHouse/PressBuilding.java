@@ -16,6 +16,16 @@ public class PressBuilding {
     private final ArrayList<PressMachine> machines;
     private final double goalForProfits;
 
+    private int editionQuantityOfCopiesLimit;   // sets with a setter (default is 10)
+    private double editionDiscount;             // sets with a setter
+
+
+
+    // fix ~79.80000000...01 to 79.80
+    private static double fixDouble(double x){ // the copy lives here
+        // double originalNumber = x; // instead of here. (copy of copy) unnecessary.
+        return Math.round(x * 100.0) / 100.0;
+    }
 
     PressBuilding(
             String name,
@@ -27,33 +37,72 @@ public class PressBuilding {
         this.employees = employees;
         this.machines = machines;
         this.goalForProfits = goalForProfits;
+        this.editionQuantityOfCopiesLimit = 10; // default value; provided external setter for member-variable.
+    }
+    public String getName() {
+        return name;
     }
 
-
-    // fix ~79.80000000...01 to 79.80
-    private static double fixDouble(double x){ // the copy lives here
-        // double originalNumber = x; // instead of here. (copy of copy) unnecessary.
-        return Math.round(x * 100.0) / 100.0;
+    public ArrayList<Employee> getEmployees() {
+        return employees;
     }
 
+    public ArrayList<PressMachine> getMachines() {
+        return machines;
+    }
 
+    public int getEditionQuantityOfCopiesLimit() {
+        return editionQuantityOfCopiesLimit;
+    }
 
+    public void setEditionQuantityOfCopiesLimit(int editionQuantityOfCopiesLimit) {
+        this.editionQuantityOfCopiesLimit = editionQuantityOfCopiesLimit;
+    }
+
+    public double getEditionDiscount() {
+        return editionDiscount;
+    }
+
+    public void setEditionDiscount(double editionDiscount) {
+        this.editionDiscount = editionDiscount;
+    }
+
+    public double getGoalForProfits() {
+        return goalForProfits;
+    }
 
     /*
-        Приходите на печатницата са от отпечатаните издания,
-        като се определя цена за отпечатване на 1 бр. от съответното издание,
-        което клиентът на печатницата заплаща .
-     */
+            Приходите на печатницата са от отпечатаните издания,
+            като се определя цена за отпечатване на 1 бр. от съответното издание,
+            което клиентът на печатницата заплаща .
+         */
     public double getPaperProfits(){
         double totalPaperProfitsFromPrintedEditionsWithVAT=0.; // VAT === ДДС
 
-        // getCustomerPricing()
-        
         for(PressMachine pressMachine : machines){
             for(Edition edition : pressMachine.getPrintedEditions().keySet()){
-                totalPaperProfitsFromPrintedEditionsWithVAT +=
-                        edition.getEditionCustomerPriceForACopy() // цена за 1 копие с ддс
-                        * pressMachine.getPrintedEditions().get(edition); // .. по всички копия от съответното издание
+
+
+                /*
+                    Ако отпечатваните издания надхвърлят предварително зададен брой,
+                    на клиентите се прави отстъпка с определен
+                    % от цената за отпечатване на 1 бр.
+                 */
+                int printedEditionsCount = pressMachine.getPrintedEditions().get(edition); // <K, _V_>
+                double editionPriceAllCopies = edition.getEditionCustomerPriceForACopy() * printedEditionsCount;
+
+                if(getEditionQuantityOfCopiesLimit() > 0 && editionDiscount > 0.){
+
+                    // ако има превишен брой издания има custom зададена отстъпка през сетъра на обекта
+                    if(printedEditionsCount >= getEditionQuantityOfCopiesLimit())
+                        totalPaperProfitsFromPrintedEditionsWithVAT += (editionPriceAllCopies) - (editionPriceAllCopies * getEditionDiscount() / 100);
+                    else
+                        totalPaperProfitsFromPrintedEditionsWithVAT += editionPriceAllCopies;
+
+                } else {
+
+                    totalPaperProfitsFromPrintedEditionsWithVAT += editionPriceAllCopies;
+                }
             }
         }
 

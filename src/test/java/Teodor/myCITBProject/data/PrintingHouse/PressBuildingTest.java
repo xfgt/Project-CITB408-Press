@@ -16,8 +16,7 @@ import org.junit.jupiter.api.Nested;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PressBuildingTest {
 
@@ -152,12 +151,80 @@ class PressBuildingTest {
         @Test
         void getPaperProfits_EditionsForCustomersWithVAT(){
 
-
             double ea = 79.80 + (79.80*20/100);
             double eb = 1191.0 + (1191.0*20/100);
 
             assertEquals(Math.round(ea * 100.0) / 100.0, localPB.getPaperProfits());
             assertEquals(Math.round(eb * 100.0) / 100.0, localPB2.getPaperProfits());
+
+
+
+        }
+
+        @Test
+        void getPaperProfits_CustomersGetDiscountOnExceededNumberOfEditionsPrinted_BothEditionsCovered(){
+
+            // накратко TL;DR
+
+
+            localPB.setEditionQuantityOfCopiesLimit(1); // дават се отстъпки и на двете издания в машината от localPB
+            //localPB.setEditionQuantityOfCopiesLimit(3); // дават се отстъпки само за newspaper, защото има 10 копия
+            localPB.setEditionDiscount(10); // 10%
+
+            /*
+                    newspaper = 6.1199995 (10)
+                    > 61.20001
+
+                    -10% = 55.08
+
+
+                    book = 34.559995 (1)
+
+                    не покрива случая (има само 1 копие): 34.559995
+
+                    -----
+                    95.76
+
+                    89,6399995 (-6,1200005) discount [localPB.setEditionQuantityOfCopiesLimit(3)]
+
+
+                    86,184 (if both had discount of 10 %) [localPB.setEditionQuantityOfCopiesLimit(1)]
+             */
+
+
+
+            localPB2.setEditionQuantityOfCopiesLimit(1);
+            localPB2.setEditionDiscount(5); // 5%
+
+
+            double ea = (95.76 - (95.76*10/100)); // 95,76 e цената с ддс (20%) [79.80] на нея слагаме отстъпки за количество (10%)
+            double eb = (1429.2 - (1429.2*5/100)); // 1429,2 e цената с ддс (20%) [1191.0] на нея слагаме отстъпки за количество (10%)
+            /*
+                При теста си го правя изданията да покриват изискванията за копия за да им начисля отстъпки и
+                да сметна бързо за всичко - n% (95.76*10/100) или (1429.2*5/100),
+                иначе трябваше да е частично. :/
+
+             */
+
+
+            assertEquals(Math.round(ea * 100.0) / 100.0, localPB.getPaperProfits());
+            assertEquals(Math.round(eb * 100.0) / 100.0, localPB2.getPaperProfits());
+
+            // LGTM
+
+
+        }
+
+
+        @Test
+        void getPaperProfits_CustomersGetDiscountOnExceededNumberOfEditionsPrinted_PartialEditionsCovered(){
+
+
+            localPB.setEditionQuantityOfCopiesLimit(3); // дават се отстъпки само за newspaper, защото има 10 копия
+            localPB.setEditionDiscount(10); // 10%
+
+
+            assertEquals(Math.round(89.64 * 100.0) / 100.0, localPB.getPaperProfits());
 
 
 
