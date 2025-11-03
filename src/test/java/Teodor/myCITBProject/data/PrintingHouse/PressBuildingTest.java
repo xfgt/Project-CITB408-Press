@@ -31,20 +31,28 @@ class PressBuildingTest {
             pm1_noColor,
             pm2_Color;
 
+    ArrayList<Employee>
+            local_employees,
+            local_employees2;
+
+    ArrayList<PressMachine>
+            local_machines,
+            local_machines2;
+
+
+
+    PressBuilding
+            localPB,
+            localPB2;
 
     @BeforeEach
     void setup(){
         manager = new Manager(1000, 5, 10);
-        System.out.println(manager.calculateSalary(10));
-
         operator = new Operator(900);
-        System.out.println(operator.calculateSalary(0));
 
         manager2 = new Manager(1600, 5, 14);
-        System.out.println(manager2.calculateSalary(13));
-
         operator2 = new Operator(900);
-        System.out.println(operator2.calculateSalary(13));
+
 
 
 
@@ -94,38 +102,24 @@ class PressBuildingTest {
 
          */
 
-
-    }
-
-
-
-
-//  @Test
-    void getEmployeeExpenses() {
-
-    }
-
-    @Test
-    void getPaperExpences() {
         {
             pm1_noColor = new PressMachine(200, false);
             pm1_noColor.loadPaper(200);
 
             pm1_noColor.printEdition(noColor_newspaper_12p, 10); // 10 * 5.1 = 51.000..1
-            pm1_noColor.printEdition(noColor_book_80p, 1); // 1 * 28.8 = 28.799..9
-                                                                    // total cost = 79.80000000...01
+            pm1_noColor.printEdition(noColor_book_80p, 1);       // 1 * 28.8 = 28.799..9
+                                                                        // total cost = 79.80000000...01
 
+            local_employees = new ArrayList<>();
+            local_employees.add(manager); // 1000.0
+            local_employees.add(operator); // 900.0
 
-            ArrayList<Employee> local_employees = new ArrayList<>();
-            local_employees.add(manager);
-            local_employees.add(operator);
-
-            ArrayList<PressMachine> local_machines = new ArrayList<>();
+            local_machines = new ArrayList<>();
             local_machines.add(pm1_noColor);
 
-            PressBuilding localPB = new PressBuilding("", local_employees, local_machines, 1000);
-            assertEquals(79.80, localPB.getPaperExpences());
+            localPB = new PressBuilding("", local_employees, local_machines, 1000);
         }
+
 
 
         {
@@ -135,16 +129,67 @@ class PressBuildingTest {
             pm2_Color.printEdition(color_book_150p, 3);      // 3 * 81 = 243
                                                                     // ~= 1191
 
-            ArrayList<Employee> local_employees2 = new ArrayList<>();
-            local_employees2.add(manager2);
-            local_employees2.add(operator2);
+            local_employees2 = new ArrayList<>();
+            local_employees2.add(manager2); // 1600
+            local_employees2.add(operator2); // 900.0
 
-            ArrayList<PressMachine> local_machines2 = new ArrayList<>();
+            local_machines2 = new ArrayList<>();
             local_machines2.add(pm2_Color);
 
-            PressBuilding localPB2 = new PressBuilding("", local_employees2, local_machines2, 1000);
-            assertEquals(1191, localPB2.getPaperExpences());
+            localPB2 = new PressBuilding("", local_employees2, local_machines2, 1000);
         }
+    }
+
+
+
+
+    @Test
+    void getEmployeeExpenses_whereManagerPersonalProfitFromSalesIsBelowTarget_returnSumOfBaseSalaries() {
+
+        assertEquals(1900, localPB.getEmployeeExpenses()); // 1000 + 900 = 1900
+        assertEquals(2500, localPB2.getEmployeeExpenses()); // 1600 + 900 = 2500
+
+
+
+    }
+
+    @Test
+    void getEmployeeExpenses_whereManagerPersonalProfitFromSalesAboveTarget_returnSumOfBaseSalariesWithManagerPersonalBonusPercent() {
+
+        //localPB_goalForProfits = 1000
+        //localPB2_goalForProfits = 1000
+
+        manager = new Manager(1000, 5, 1500); // 1000 + (1000*5/100) = 1050 + operator(900) = 1950
+        manager2 = new Manager(1600, 5, 1500); // 1600 + (1600 * 5 /100) = 1680 + operator(900) = 2580
+
+        ArrayList<Employee> new_employees = new ArrayList<>();
+        new_employees.add(manager);
+        new_employees.add(operator);
+
+        ArrayList<Employee> new_employees2 = new ArrayList<>();
+        new_employees2.add(manager2);
+        new_employees2.add(operator2);
+
+
+
+        localPB = new PressBuilding("", new_employees, local_machines, 1000);
+        assertEquals(1950, localPB.getEmployeeExpenses());
+
+
+        localPB2 = new PressBuilding("", new_employees2, local_machines2, 1000);
+        assertEquals(2580, localPB2.getEmployeeExpenses());
+
+
+
+    }
+
+    @Test
+    void getPaperExpences() {
+
+
+        assertEquals(79.80, localPB.getPaperExpences());
+        assertEquals(1191, localPB2.getPaperExpences());
+
 
 
     }
