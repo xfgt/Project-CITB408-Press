@@ -138,6 +138,17 @@ public class PressBuilding {
     }
 
 
+    @Override
+    public String toString() {
+        return "PressBuilding{" +
+                "name='" + name + '\'' +
+                ", employees=" + employees +
+                ", machines=" + machines +
+                ", goalForProfits=" + goalForProfits +
+                ", editionQuantityOfCopiesLimit=" + editionQuantityOfCopiesLimit +
+                ", editionDiscount=" + editionDiscount +
+                '}';
+    }
 }
 
 

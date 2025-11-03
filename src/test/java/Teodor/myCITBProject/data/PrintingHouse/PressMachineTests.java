@@ -31,7 +31,7 @@ class PressMachineTests {
     @BeforeEach
     void setup(){
 
-        pm = new PressMachine(100, false);
+        pm = new PressMachine("",100, false);
 
         newspaper_A2_NEWSPAPER_noColored = new Newspaper("Telegraf", 36, PaperSize.A2, PaperType.NEWSPAPER, false);
         newspaper_A3_GLOSSY_colored = new Newspaper("Kapital", 24, PaperSize.A3, PaperType.GLOSSY, true);
@@ -50,10 +50,10 @@ class PressMachineTests {
     @Test
     void constructor_machineSheetsCapacityIsZeroOrNegative_throwIllegalArgumentException(){
         assertThrows(IllegalArgumentException.class, () ->{
-           pm = new PressMachine(0, false);
+           pm = new PressMachine("",0, false);
         });
         assertThrows(IllegalArgumentException.class, () ->{
-            pm = new PressMachine(-1, false);
+            pm = new PressMachine("",-1, false);
         });
     }
 
@@ -124,7 +124,7 @@ class PressMachineTests {
 
     @Test
     void printEdition_machineWithColorPrintAndEditionNoColorMismatch_thenThrowIncompatibleEditionException() {
-        pm = new PressMachine(100, true); // TRUE!
+        pm = new PressMachine("",100, true); // TRUE!
         pm.loadPaper(100);
         Edition book = new Book("", 100, PaperSize.A4, PaperType.STANDARD, false);
         assertThrows(IncompatibleEditionException.class, () -> {

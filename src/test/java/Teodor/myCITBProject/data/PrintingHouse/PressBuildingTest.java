@@ -9,9 +9,7 @@ import Teodor.myCITBProject.data.PrintingHouse.Enums.PaperType;
 import Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers.Employee;
 import Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers.Manager;
 import Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers.Operator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.*;
 
 
 import java.util.ArrayList;
@@ -105,7 +103,7 @@ class PressBuildingTest {
          */
 
         {
-            pm1_noColor = new PressMachine(200, false);
+            pm1_noColor = new PressMachine("",200, false);
             pm1_noColor.loadPaper(200);
 
             pm1_noColor.printEdition(noColor_newspaper_12p, 10); // 10 * 5.1 = 51.000..1
@@ -125,7 +123,7 @@ class PressBuildingTest {
 
 
         {
-            pm2_Color = new PressMachine(1000, true);
+            pm2_Color = new PressMachine("",1000, true);
             pm2_Color.loadPaper(1000);
             pm2_Color.printEdition(color_placard_2p, 100);   // 100 * 9.48 = 948
             pm2_Color.printEdition(color_book_150p, 3);      // 3 * 81 = 243
@@ -142,6 +140,12 @@ class PressBuildingTest {
         }
     }
 
+    @Test
+    void printFactories(){
+        System.out.println(localPB);
+        System.out.println(localPB2);
+        assertFalse(true);
+    }
 
 
     @Nested

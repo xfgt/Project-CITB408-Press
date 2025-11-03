@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PressMachine {
+    private String name;
     private int machineSheetsCapacity;
     private int loadedSheetsAmount;
     private int accumulatedSheets; // колко хартия е минала през машината
@@ -18,18 +19,26 @@ public class PressMachine {
     private Map<Edition, Integer> printedEditions = new HashMap<>();
 
 
-    public PressMachine(int machineSheetsCapacity, boolean color) throws IllegalArgumentException {
+    public PressMachine(String name, int machineSheetsCapacity, boolean color) throws IllegalArgumentException {
         if(machineSheetsCapacity <= 0)
             throw new IllegalArgumentException("Capacity must be above zero!");
 
+        this.name = name;
         this.machineSheetsCapacity = machineSheetsCapacity;
         this.printsInColor = color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getMachineSheetsCapacity() {
         return machineSheetsCapacity;
     }
-
     public int getAvailablePaper() {
         return loadedSheetsAmount;
     }
@@ -79,5 +88,15 @@ public class PressMachine {
         printedEditions.put(edition, printedEditions.getOrDefault(edition, 0) + copies);
     }
 
-
+    @Override
+    public String toString() {
+        return "PressMachine{" +
+                "name='" + name + '\'' +
+                ", machineSheetsCapacity=" + machineSheetsCapacity +
+                ", loadedSheetsAmount=" + loadedSheetsAmount +
+                ", accumulatedSheets=" + accumulatedSheets +
+                ", printsInColor=" + printsInColor +
+                ", printedEditions=" + printedEditions +
+                '}';
+    }
 }
