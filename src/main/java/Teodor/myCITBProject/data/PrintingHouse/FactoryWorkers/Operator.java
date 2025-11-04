@@ -16,4 +16,12 @@ public class Operator extends Employee implements Serializable {
     public String toString() {
         return "Operator salary=" + getBaseSalary() + "\n";
     }
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                "[Operator]\n" + super.getFormattedInfo(x, y) + '\n'
+        );
+        return result;
+    }
 }

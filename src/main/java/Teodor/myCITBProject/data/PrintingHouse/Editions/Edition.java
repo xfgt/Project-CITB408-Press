@@ -3,13 +3,14 @@ package Teodor.myCITBProject.data.PrintingHouse.Editions;
 import Teodor.myCITBProject.data.PrintingHouse.Enums.*;
 import Teodor.myCITBProject.service.PrintingHouse.Editions.ICustomerPricing;
 import Teodor.myCITBProject.service.PrintingHouse.Editions.IPaperPricing;
+import Teodor.myCITBProject.service.PrintingHouse.IPrintInfo;
 
 
 /*
 В печатница се отпечатват различни издания – книги, плакати, вестници и др. Всяко от
 изданията се определя от заглавие, брой и размер на страниците (А1, А2, А3, А4, А5).
  */
-public abstract class Edition implements IPaperPricing, ICustomerPricing {
+public abstract class Edition implements IPaperPricing, ICustomerPricing, IPrintInfo {
     private String title;
     private int pages;
     private PaperSize paperSize;
@@ -70,5 +71,21 @@ public abstract class Edition implements IPaperPricing, ICustomerPricing {
     public double getEditionCustomerPriceForACopy(){ // продажна цена
         return (getPriceForACopy()) + (getPriceForACopy() * 20 /100); // 5.1 -> 6.12; Имитираме цена продажба: цена за производство + ДДС 20% (VAT)
     }
+
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                "[Edition] " + title +
+                "\n" + x.repeat(y) + "pages " + pages +
+                "\n" + x.repeat(y) + "paperSize " + paperSize + " (" + paperSize.getPriceMultiplier() + ")" +
+                "\n" + x.repeat(y) + "paperType " + paperType + " (" + paperType.getBasePrice() + ")" +
+                "\n" + x.repeat(y) + "color " + ((color) ? "yes" : "no") + '\n'
+        );
+
+
+        return result;
+    };
+
 
 }

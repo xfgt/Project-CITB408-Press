@@ -14,4 +14,14 @@ public class Book extends Edition{
         return "Book{" + super.toString() +
                 '}';
     }
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                "[Book]->" + super.getFormattedInfo(x, y)
+        );
+
+
+        return result;
+    };
 }

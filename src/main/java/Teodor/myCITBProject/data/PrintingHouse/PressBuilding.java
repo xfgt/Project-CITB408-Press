@@ -4,12 +4,13 @@ package Teodor.myCITBProject.data.PrintingHouse;
 
 import Teodor.myCITBProject.data.PrintingHouse.Editions.Edition;
 import Teodor.myCITBProject.data.PrintingHouse.FactoryWorkers.Employee;
+import Teodor.myCITBProject.service.PrintingHouse.IPrintInfo;
 
 import java.util.ArrayList;
 
 
 
-public class PressBuilding {
+public class PressBuilding implements IPrintInfo {
 
     private final String name;
     private final ArrayList<Employee> employees;
@@ -148,6 +149,31 @@ public class PressBuilding {
                 ", editionQuantityOfCopiesLimit=" + editionQuantityOfCopiesLimit +
                 ", editionDiscount=" + editionDiscount +
                 '}';
+    }
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                "[Press building] " + name +
+                "\n" + x.repeat(y) + "goal for profits: " + goalForProfits +
+                "\n" + x.repeat(y) + "minimum copies for discount: " + editionQuantityOfCopiesLimit +
+                "\n" + x.repeat(y) + "discount: " + editionDiscount +
+                "\n" + x.repeat(y) + "employees: "
+        );
+        for(Employee employee : employees){
+            result += String.format(
+                    x.repeat(y) + employee.getFormattedInfo(x, y+1) + '\n'
+            );
+        }
+
+        result += "\nmachines: ";
+        for(PressMachine machine : machines){
+            result += String.format(
+                    "\n" + machine.getFormattedInfo(x, y)
+            );
+        }
+
+        return result;
     }
 }
 

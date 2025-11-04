@@ -142,8 +142,8 @@ class PressBuildingTest {
 
     @Test
     void printFactories(){
-        System.out.println(localPB);
-        System.out.println(localPB2);
+        System.out.println(localPB.getFormattedInfo("\t", 3));
+        System.out.println(localPB2.getFormattedInfo("\t", 3));
         assertFalse(true);
     }
 

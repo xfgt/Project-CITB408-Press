@@ -126,27 +126,10 @@ public class Main {
             PressBuilding pb2 = new PressBuilding("Pechatnica Serdika", employees2, machines2, 2000);
 
 
-
-//            for(Employee e : pb1.getEmployees()){
-//                System.out.println(e);
-//                service.serializeEmployee(fileName, e);;
-//            }
-
-//            service.serializeEmployee(fileName, manager);
-//            Employee employee =  service.deSerializeEmployee(fileName);
-//            System.out.println(employee);
-
-
-
-
-            Employee x = service.deSerializeEmployee(fileName);
-            System.out.println(x);
-
-            Employee y = service.deSerializeEmployee(fileName);
-            System.out.println(y);
-
-            Employee z = service.deSerializeEmployee(fileName);
-            System.out.println(z);
+            System.out.println(pb1);
+            for(Employee e : pb1.getEmployees()){
+                System.out.println(e.getFormattedInfo("\t", 3));
+            }
 
 
 

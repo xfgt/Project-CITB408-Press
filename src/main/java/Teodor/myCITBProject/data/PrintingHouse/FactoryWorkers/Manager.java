@@ -35,8 +35,21 @@ public class Manager extends Employee implements Serializable {
     @Override
     public String toString() {
         return "Manager{" +
-                "percentBonus=" + personalBonusPercent +
-                ", profitCeiling=" + profitFromSales +
+                "personalBonusPercent=" + personalBonusPercent +
+                ", personalBonusPercent=" + profitFromSales +
                 "} " + super.toString();
+    }
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                   "\n"+ x.repeat(y) + "[Manager]" +
+                   "\n"+ x.repeat(y+1) + "personalBonusPercent = " + personalBonusPercent +
+                   "\n"+ x.repeat(y+1) + "personalBonusPercent = " + profitFromSales +
+                   '\n' + super.getFormattedInfo(x, y)
+                );
+
+
+        return result;
     }
 }

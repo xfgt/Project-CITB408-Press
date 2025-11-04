@@ -5,11 +5,12 @@ import Teodor.myCITBProject.data.PrintingHouse.Exception.IncompatibleEditionExce
 import Teodor.myCITBProject.data.PrintingHouse.Exception.MachineOverloadException;
 import Teodor.myCITBProject.data.PrintingHouse.Exception.MachineException;
 import Teodor.myCITBProject.data.PrintingHouse.Exception.PrintingException;
+import Teodor.myCITBProject.service.PrintingHouse.IPrintInfo;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class PressMachine {
+public class PressMachine implements IPrintInfo {
     private String name;
     private int machineSheetsCapacity;
     private int loadedSheetsAmount;
@@ -98,5 +99,27 @@ public class PressMachine {
                 ", printsInColor=" + printsInColor +
                 ", printedEditions=" + printedEditions +
                 '}';
+    }
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                "[Press machine] " + name +
+                 "\n" + x.repeat(y) + "capacity: " + machineSheetsCapacity +
+                 "\n" + x.repeat(y) + "amount of loaded paper: " + loadedSheetsAmount +
+                 "\n" + x.repeat(y) + "amount of accumulated sheets: " + accumulatedSheets +
+                 "\n" + x.repeat(y) + "prints in color: " + ((printsInColor) ? "yes" : "no") +
+                 "\n" + x.repeat(y) + "printed editions: "
+        );
+        for(Map.Entry<Edition, Integer> map : printedEditions.entrySet()){
+            result += String.format(
+                    "\n" + x.repeat(y+1) + map.getValue().toString() + " copies of: \n" +
+                     x.repeat(y+1) + map.getKey().getFormattedInfo(x, y+2)
+            );
+        }
+
+
+
+        return result;
     }
 }

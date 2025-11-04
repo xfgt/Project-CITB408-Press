@@ -14,4 +14,14 @@ public class Newspaper extends Edition{
         return "Newspaper{" + super.toString() +
                 '}';
     }
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                "[Newspaper]->" + super.getFormattedInfo(x, y)
+        );
+
+
+        return result;
+    };
 }

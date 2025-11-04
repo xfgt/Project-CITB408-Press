@@ -14,4 +14,15 @@ public class Placard extends Edition{
         return "Placard{" + super.toString() +
                 '}';
     }
+
+    @Override
+    public String getFormattedInfo(String x, int y){
+        String result = String.format(
+                "[Placard]->" + super.getFormattedInfo(x, y)
+        );
+
+
+        return result;
+    };
+
 }
